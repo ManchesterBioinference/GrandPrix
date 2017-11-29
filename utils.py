@@ -2,6 +2,8 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 import  numpy as np
+import  pandas as pd
+import GPflow
 from collections import OrderedDict
 
 matplotlib.rcParams['axes.facecolor'] = 'white'
@@ -16,6 +18,24 @@ def calcroughness(x, pt):
     assert(N > 0)
     S = x.std(axis=1)
     return np.sqrt(np.sum(np.square(x[:,0:(N-1)] - x[:, 1:N]),1) / (N-1)) / S
+
+def cbtime_to_tau(pTime, startTime, endTime, timeDiff):
+    t = pTime * (endTime - startTime) / 100.
+    t = t + (startTime + timeDiff / 2.)
+
+    if t >= endTime:
+        t = t - (endTime - startTime)
+    return t
+
+
+def tau_to_cbtime(tau, startTime, endTime, timeDiff):
+    t = tau - (startTime + timeDiff / 2.)
+    if t <= 0.:
+        t = t + (endTime - startTime)
+    t = t * 100. / (endTime - startTime)
+    if t > 100:
+        t = np.abs(100 - t)
+    return t
 
 def plot(title, xLabel, yLabel, xData, yData, cpt, xErr=None):
     plt.rcParams['axes.facecolor'] = 'white'
@@ -48,6 +68,9 @@ def plot(title, xLabel, yLabel, xData, yData, cpt, xErr=None):
     plt.setp(l.get_title(), fontsize=16)
 
 def plot_comparison(plotDf, dataset='Windram'):
+    plt.rcParams['axes.facecolor'] = 'white'
+    plt.rcParams['axes.edgecolor'] = 'black'
+
     title = 'Comparision to the DeLorean Model'
     xLabel = 'Number of inducing points'
 
@@ -87,6 +110,8 @@ def plot_comparison(plotDf, dataset='Windram'):
     fig.gca().add_artist(l2)
 
 def plot_fitting_time_comparison(plotDf):
+    plt.rcParams['axes.facecolor'] = 'white'
+    plt.rcParams['axes.edgecolor'] = 'black'
     plt.figure(figsize=(8, 8))
     plt.plot(plotDf['inducingPoints'], plotDf['timeDeLorean'], linestyle='--', linewidth=2.5, color='r')
     plt.plot(plotDf['inducingPoints'], plotDf['GPLVM_fitting_time'], linewidth=2.5, color='g')
@@ -99,3 +124,67 @@ def plot_fitting_time_comparison(plotDf):
     red_line = mlines.Line2D([], [], color='red', linestyle='--', linewidth=2.5, label='DeLorean')
 
     _ = plt.legend(handles=[red_line, green_line], bbox_to_anchor=(1.21, 0.5), loc=10, fontsize=20, frameon=False)
+
+def plot_genes(pseudotimes, geneProfiles, geneData, cpt, prediction):
+    plt.rcParams['axes.facecolor'] = 'white'
+    plt.rcParams['axes.edgecolor'] = 'Gray'
+    plt.rc('xtick', labelsize=15)
+
+    startTime = 1.
+    endTime = 3.55
+    timeDiff = 0.85
+
+    selectedGenes = geneProfiles.keys().values
+    cbPeaktime = np.zeros(len(selectedGenes))
+    for g in range(0, len(selectedGenes)):
+        cbPeaktime[g] = cbtime_to_tau(geneData[selectedGenes[g]].cbPeaktime, startTime, endTime, timeDiff)
+        # print(geneData[selectedGenes[g]].cbPeaktime)
+
+    Xnew = prediction[0]
+    meanDf = prediction[1]
+    varDf = prediction[2]
+    # Create a Dataframe to contain predictive mean and variance
+    predictDf = {}
+    for i in range(len(selectedGenes)):
+        predictDf[selectedGenes[i]] = pd.DataFrame({'mean': meanDf[selectedGenes[i]], 'var': varDf[selectedGenes[i]]})
+
+    # Plot the result
+    title = 'McDavid'
+    xLabel = 'Pseudotime'
+    yLabel = 'Expression'
+
+    fig, ax = plt.subplots(nrows=2, ncols=3, sharex=True, sharey=True, figsize=(12, 8))
+
+    # plt.suptitle(title, fontsize=16)
+    fig.text(0.5, -0.04, xLabel, ha='center', va='center', fontsize=20)
+    fig.text(0.04, 0.5, yLabel, ha='center', va='center', rotation='vertical', fontsize=20)
+
+    xValues = np.array([1., 1.85, 2.7, 3.55])
+    xString = np.array(['G2/M', 'G0/G1', 'S', 'G2/M'])
+    plt.xticks(xValues, xString)
+    # plt.xlim(1., 3.55)
+
+    # Following codes are used just to add legends
+    cellCycleStages = {'g0/g1': u'red', 's': u'green', 'g2/m': u'blue'}
+    stageColorCodes = ['red', 'green', 'blue']
+    color_map = [stageColorCodes[cpt[i] - 1] for i in range(len(cpt))]
+    markers = [plt.Line2D([0, 0], [0, 0], color=color, marker='o', markersize=9, linestyle='') for color in
+               cellCycleStages.values()]
+    l = plt.legend(markers, cellCycleStages.keys(), numpoints=1, title='Capture Stages', bbox_to_anchor=(1.6, 1.1),
+                   loc=10, fontsize=20, frameon=False)
+    plt.setp(l.get_title(), fontsize=20)
+
+    n = 0
+    for row in ax:
+        for col in row:
+            col.plot(Xnew[:, 0], predictDf[selectedGenes[n]]['mean'].values, 'black', lw=1)
+            col.fill_between(Xnew[:, 0], predictDf[selectedGenes[n]]['mean'].values - \
+                             2 * np.sqrt(predictDf[selectedGenes[n]]['var'].values),
+                             predictDf[selectedGenes[n]]['mean'].values + \
+                             2 * np.sqrt(predictDf[selectedGenes[n]]['var'].values), color='grey', alpha=0.5)
+            col.scatter(pseudotimes, geneProfiles[selectedGenes[n]], 130, marker='.', c=color_map, alpha=0.6)
+            col.set_title(selectedGenes[n], fontsize=16)
+            col.axvline(cbPeaktime[n], linestyle='--', color='black')
+            plt.setp(col.xaxis.get_majorticklabels(), rotation=90)
+            col.yaxis.set_tick_params(labelsize=14)
+            n = n + 1

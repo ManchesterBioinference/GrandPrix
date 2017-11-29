@@ -87,6 +87,14 @@ class GrandPrix(object):
             k = GPflow.ekernels.RBF(input_dim)
         return  k
 
+    def fixed_params(self, param_list):
+        if 'll_var' in param_list:  self.m.likelihood.variance.fixed = True
+        if 'Z' in param_list:  self.m.Z.fixed = True
+        if 'X_mean' in param_list:  self.m.X_mean.fixed = True
+        if 'X_var' in param_list:  self.m.X_var.fixed = True
+        if 'k_ls' in param_list:  self.m.kern.lengthscales.fixed = True
+        if 'k_var' in param_list:  self.m.kern.variance.fixed = True
+
     def build_model(self, priors=None, vParams=None, **kwargs):
         if 'latent_dims' in kwargs:
             self.Q = kwargs.pop('latent_dims')
@@ -109,17 +117,19 @@ class GrandPrix(object):
             self.m = GPflow.gplvm.BayesianGPLVM(Y=self.Y, kern=kern, X_mean=X_mean.copy(), X_var=X_var, Z=Z.copy(), M=self.M)
         self.m.likelihood.variance = 0.01
         self.m.likelihood.variance.fixed = False
-        # self.m.Z.fixed = True
-        # self.m.X_var.fixed = True
-        # self.m.kern.lengthscales.fixed = True
-        # self.m.kern.variance.fixed = True
 
-    def fit_model(self):
+        if 'fixed' in kwargs:
+            self.fixed_params(kwargs.pop('fixed'))
+
+    def fit_model(self, maxiter=1000, display=False):
         import warnings
         warnings.filterwarnings('ignore')
         t0 = time.time()
-        _ = self.m.optimize()
+        _ = self.m.optimize(maxiter=maxiter, disp=display)
         self.fitting_time = time.time() - t0
+
+    def predict_posterior(self, Xnew):
+        return self.m.predict_y(Xnew)
 
     def get_model_fitting_time(self):
         return self.fitting_time
