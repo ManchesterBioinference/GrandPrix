@@ -1,6 +1,7 @@
 import GPflow
 import numpy as np
 import  time
+import sys, os
 
 class GrandPrix(object):
     def __init__(self, Y, mData=None):
@@ -9,6 +10,9 @@ class GrandPrix(object):
         self.N, self.D = Y.shape
         self.Q = 1
         self.M = 10
+
+    def MapTo01(self, y):
+        return (y.copy() - y.min(0)) / (y.max(0) - y.min(0))
 
     def initialize_priors(self, priors):
         if type(priors['Priormean']) is str:
@@ -19,14 +23,13 @@ class GrandPrix(object):
         return (X_prior_mean, X_prior_var)
 
     def initialize_latent_dims(self, Xmean=None, Xvar=0.1):
-        # print(type(Xmean))
         if Xmean is not None:
             if type(Xmean) is str:
                 X_mean = self.mData[Xmean].values[:, None]
             else:
                 X_mean = Xmean
         else:
-            X_mean = GPflow.gplvm.PCA_reduce(self.Y, self.Q)
+            X_mean = self.MapTo01(GPflow.gplvm.PCA_reduce(self.Y, self.Q))
         X_var = Xvar * np.ones((self.N, self.Q))
         return (X_mean, X_var)
 
@@ -45,12 +48,12 @@ class GrandPrix(object):
             try:
                 if 'Xmean' in vParams:
                     if 'Xvar' in vParams:
-                        X_mean, X_var = self.initialize_latent_dims(vParams['Xmean'], vParams['Xvar'])
+                        X_mean, X_var = self.initialize_latent_dims(Xmean=vParams['Xmean'], Xvar=vParams['Xvar'])
                     else:
-                        X_mean, X_var = self.initialize_latent_dims(vParams['Xmean'])
+                        X_mean, X_var = self.initialize_latent_dims(Xmean=vParams['Xmean'])
                         # print(X_mean, X_var)
                 elif 'Xvar' in vParams:
-                    X_mean, X_var = self.initialize_latent_dims(vParams['xVar'])
+                    X_mean, X_var = self.initialize_latent_dims(Xvar=vParams['Xvar'])
                 else:
                     X_mean, X_var = self.initialize_latent_dims()
 
@@ -103,7 +106,6 @@ class GrandPrix(object):
 
         if 'kernel' in kwargs:
             kern = self.initialize_kernel(kwargs.pop('kernel'))
-
         else:
             kern = self.initialize_kernel()
 
@@ -124,9 +126,11 @@ class GrandPrix(object):
     def fit_model(self, maxiter=1000, display=False):
         import warnings
         warnings.filterwarnings('ignore')
+        sys.stdout = open(os.devnull, 'w')
         t0 = time.time()
         _ = self.m.optimize(maxiter=maxiter, disp=display)
         self.fitting_time = time.time() - t0
+        sys.stdout = sys.__stdout__
 
     def predict_posterior(self, Xnew):
         return self.m.predict_y(Xnew)

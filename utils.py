@@ -188,3 +188,23 @@ def plot_genes(pseudotimes, geneProfiles, geneData, cpt, prediction):
             plt.setp(col.xaxis.get_majorticklabels(), rotation=90)
             col.yaxis.set_tick_params(labelsize=14)
             n = n + 1
+
+def plot_XY(X, Y, title, data_labels):
+    plt.rcParams['axes.facecolor'] = 'white'
+    plt.rcParams['axes.edgecolor'] = 'black'
+    plt.rc('axes', color_cycle=['royalblue', 'orange', 'green', 'red', 'blueviolet', 'sienna', 'hotpink', 'gray', 'y', 'c'])
+
+    label_order = ['1', '16', '2', '32 ICM', '32 TE', '4', '64 PE', '64 TE', '64 EPI', '8']
+
+    for l in label_order:
+        plt.scatter(X[data_labels == l], Y[data_labels == l], 100, label=l)
+        xPos = np.median(X[data_labels == l])
+        yPos = np.median(Y[data_labels == l])
+        if title == 'No prior' and l == '32 TE':
+            xPos = xPos - 0.2
+        if title == 'No prior' and l == '64 TE':
+            xPos = xPos + 0.2
+        plt.text(xPos, yPos, l, fontsize=24, weight='bold')
+        plt.xlabel('GPLVM-1 (Pseudotime)', fontsize=20)
+        plt.ylabel('GPLVM-2', fontsize=20)
+        plt.title(title, fontsize=20)
