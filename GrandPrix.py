@@ -1,4 +1,4 @@
-import GPflow
+import gpflow
 import numpy as np
 import  time
 import sys, os
@@ -29,7 +29,7 @@ class GrandPrix(object):
             else:
                 X_mean = Xmean
         else:
-            X_mean = self.MapTo01(GPflow.gplvm.PCA_reduce(self.Y, self.Q))
+            X_mean = self.MapTo01(gpflow.gplvm.PCA_reduce(self.Y, self.Q))
         X_var = Xvar * np.ones((self.N, self.Q))
         return (X_mean, X_var)
 
@@ -78,16 +78,16 @@ class GrandPrix(object):
                 var = kernel['var']
 
         if kernelName == 'RBF':
-            k = GPflow.ekernels.RBF(input_dim, lengthscales=ls, variance=var, ARD=True)
+            k = gpflow.ekernels.RBF(input_dim, lengthscales=ls, variance=var, ARD=True)
         elif kernelName == 'Matern32':
-            k = GPflow.kernels.Matern32(input_dim, lengthscales=ls, variance=var)
-            # k =  k + GPflow.kernels.White(input_dim, variance=0.01)
+            k = gpflow.kernels.Matern32(input_dim, lengthscales=ls, variance=var)
+            # k =  k + gpflow.kernels.White(input_dim, variance=0.01)
         elif kernelName == 'Periodic':
-            k = GPflow.kernels.PeriodicKernel(input_dim)
+            k = gpflow.kernels.PeriodicKernel(input_dim)
             k.lengthscales = ls
             k.period = 1.
         else:
-            k = GPflow.ekernels.RBF(input_dim)
+            k = gpflow.ekernels.RBF(input_dim)
         return  k
 
     def fixed_params(self, param_list):
@@ -113,10 +113,10 @@ class GrandPrix(object):
 
         if priors is not None:
             X_prior_mean, X_prior_var = self.initialize_priors(priors)
-            self.m = GPflow.gplvm.BayesianGPLVM(Y=self.Y, kern=kern, X_prior_mean=X_prior_mean, X_prior_var=X_prior_var,
+            self.m = gpflow.gplvm.BayesianGPLVM(Y=self.Y, kern=kern, X_prior_mean=X_prior_mean, X_prior_var=X_prior_var,
                                    X_mean=X_mean.copy(), X_var=X_var, Z=Z.copy(), M=self.M)
         else:
-            self.m = GPflow.gplvm.BayesianGPLVM(Y=self.Y, kern=kern, X_mean=X_mean.copy(), X_var=X_var, Z=Z.copy(), M=self.M)
+            self.m = gpflow.gplvm.BayesianGPLVM(Y=self.Y, kern=kern, X_mean=X_mean.copy(), X_var=X_var, Z=Z.copy(), M=self.M)
         self.m.likelihood.variance = 0.01
         self.m.likelihood.variance.fixed = False
 
@@ -126,11 +126,11 @@ class GrandPrix(object):
     def fit_model(self, maxiter=1000, display=False):
         import warnings
         warnings.filterwarnings('ignore')
-        sys.stdout = open(os.devnull, 'w')
+        # sys.stdout = open(os.devnull, 'w')
         t0 = time.time()
         _ = self.m.optimize(maxiter=maxiter, disp=display)
         self.fitting_time = time.time() - t0
-        sys.stdout = sys.__stdout__
+        # sys.stdout = sys.__stdout__
 
     def predict_posterior(self, Xnew):
         return self.m.predict_y(Xnew)
