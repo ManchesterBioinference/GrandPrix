@@ -188,7 +188,37 @@ def plot_genes(pseudotimes, geneProfiles, geneData, cpt, prediction):
             col.yaxis.set_tick_params(labelsize=14)
             n = n + 1
 
-def plot_XY(X, Y, title, data_labels):
+def plotcorrelation(X, Y, title, data_labels):
+    print("sumon")
+    plt.rcParams['axes.facecolor'] = 'white'
+    plt.rcParams['axes.edgecolor'] = 'black'
+    plt.rc('axes', color_cycle=['royalblue', 'orange', 'green', 'red', 'blueviolet', 'sienna', 'hotpink', 'gray', 'y', 'c'])
+
+    label_order = ['1', '16', '2', '32 ICM', '32 TE', '4', '64 PE', '64 TE', '64 EPI', '8']
+    yVals = np.array([1, 2, 4, 8, 16, 24, 32])
+    yStrings = np.array(['1', '2', '4', '8', '16', '32', '64'])
+
+    for l in label_order:
+        x = Y[data_labels == l]
+        if x[0]==64.:
+            x = [x[i] - 32 for i in range(0,len(x))]
+        elif x[0] == 1.:
+            x = [x[i] - 0. for i in range(0, len(x))]
+        elif x[0] == 4.:
+            x = [x[i] + 0. for i in range(0, len(x))]
+        elif x[0] == 32.:
+            x = [x[i] - 8. for i in range(0, len(x))]
+
+        plt.scatter(X[data_labels == l], x, 100, label=l)
+        plt.tick_params(labelsize=14)
+        plt.yticks(yVals, yStrings)
+        plt.xlabel('Pseudotime', fontsize = 20)
+        plt.ylabel('Capture time', fontsize=20)
+        plt.title(title, fontsize=20)
+        l = plt.legend(loc="lower right", fontsize=14, ncol=2, title="Capture stages", borderaxespad=0., columnspacing=0.2, handletextpad=0.1)
+        plt.setp(l.get_title(), fontsize=16)
+
+def plot_XY(X, Y, title, data_labels, **kwargs):
     plt.rcParams['axes.facecolor'] = 'white'
     plt.rcParams['axes.edgecolor'] = 'black'
     plt.rc('axes', color_cycle=['royalblue', 'orange', 'green', 'red', 'blueviolet', 'sienna', 'hotpink', 'gray', 'y', 'c'])
@@ -199,11 +229,16 @@ def plot_XY(X, Y, title, data_labels):
         plt.scatter(X[data_labels == l], Y[data_labels == l], 100, label=l)
         xPos = np.median(X[data_labels == l])
         yPos = np.median(Y[data_labels == l])
-        if title == 'No prior' and l == '32 TE':
-            xPos = xPos - 0.2
-        if title == 'No prior' and l == '64 TE':
+        if title != 'With prior' and l == '32 TE':
+            xPos = xPos - 0.4
+        if title == 'With prior' and l == '64 TE':
             xPos = xPos + 0.2
         plt.text(xPos, yPos, l, fontsize=24, weight='bold')
-        plt.xlabel('GPLVM-1 (Pseudotime)', fontsize=20)
-        plt.ylabel('GPLVM-2', fontsize=20)
-        plt.title(title, fontsize=20)
+
+    xlabel = 'GPLVM-1 (Pseudotime)'
+    ylabel = 'GPLVM-2'
+    if 'xlabel' in kwargs:  xlabel = kwargs.pop('xlabel')
+    if 'ylabel' in kwargs:  ylabel = kwargs.pop('ylabel')
+    plt.xlabel(xlabel, fontsize=20)
+    plt.ylabel(ylabel, fontsize=20)
+    plt.title(title, fontsize=20)
