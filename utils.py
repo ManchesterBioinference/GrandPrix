@@ -233,7 +233,7 @@ def plot_XY(X, Y, title, data_labels, **kwargs):
             xPos = xPos - 0.4
         if title == 'With prior' and l == '64 TE':
             xPos = xPos + 0.2
-        plt.text(xPos, yPos, l, fontsize=24, weight='bold')
+        plt.text(xPos, yPos, l, fontsize=16, weight='bold')
 
     xlabel = 'GPLVM-1 (Pseudotime)'
     ylabel = 'GPLVM-2'
