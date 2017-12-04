@@ -4,10 +4,13 @@ import matplotlib.lines as mlines
 import  numpy as np
 import  pandas as pd
 from collections import OrderedDict
+import warnings
+warnings.filterwarnings('ignore')
 
+matplotlib.style.use('ggplot')
 matplotlib.rcParams['axes.facecolor'] = 'white'
 matplotlib.rcParams['axes.edgecolor'] = 'black'
-matplotlib.style.use('ggplot')
+plt.rc('axes', color_cycle=['royalblue', 'orange', 'green', 'red', 'blueviolet', 'sienna', 'hotpink', 'gray', 'y', 'c'])
 
 def calcroughness(x, pt):
     x=np.atleast_2d(x)
@@ -189,10 +192,9 @@ def plot_genes(pseudotimes, geneProfiles, geneData, cpt, prediction):
             n = n + 1
 
 def plotcorrelation(X, Y, title, data_labels):
-    print("sumon")
-    plt.rcParams['axes.facecolor'] = 'white'
-    plt.rcParams['axes.edgecolor'] = 'black'
-    plt.rc('axes', color_cycle=['royalblue', 'orange', 'green', 'red', 'blueviolet', 'sienna', 'hotpink', 'gray', 'y', 'c'])
+    # plt.rcParams['axes.facecolor'] = 'white'
+    # plt.rcParams['axes.edgecolor'] = 'black'
+    # plt.rc('axes', color_cycle=['royalblue', 'orange', 'green', 'red', 'blueviolet', 'sienna', 'hotpink', 'gray', 'y', 'c'])
 
     label_order = ['1', '16', '2', '32 ICM', '32 TE', '4', '64 PE', '64 TE', '64 EPI', '8']
     yVals = np.array([1, 2, 4, 8, 16, 24, 32])
@@ -219,9 +221,9 @@ def plotcorrelation(X, Y, title, data_labels):
         plt.setp(l.get_title(), fontsize=16)
 
 def plot_XY(X, Y, title, data_labels, **kwargs):
-    plt.rcParams['axes.facecolor'] = 'white'
-    plt.rcParams['axes.edgecolor'] = 'black'
-    plt.rc('axes', color_cycle=['royalblue', 'orange', 'green', 'red', 'blueviolet', 'sienna', 'hotpink', 'gray', 'y', 'c'])
+    # plt.rcParams['axes.facecolor'] = 'white'
+    # plt.rcParams['axes.edgecolor'] = 'black'
+    # plt.rc('axes', color_cycle=['royalblue', 'orange', 'green', 'red', 'blueviolet', 'sienna', 'hotpink', 'gray', 'y', 'c'])
 
     label_order = ['1', '16', '2', '32 ICM', '32 TE', '4', '64 PE', '64 TE', '64 EPI', '8']
 
