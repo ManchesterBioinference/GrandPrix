@@ -227,6 +227,9 @@ def plot_XY(X, Y, title, data_labels, **kwargs):
 
     label_order = ['1', '16', '2', '32 ICM', '32 TE', '4', '64 PE', '64 TE', '64 EPI', '8']
 
+    fsize = 16
+    if 'fontsize' in kwargs:    fsize = kwargs.pop('fontsize')
+
     for l in label_order:
         plt.scatter(X[data_labels == l], Y[data_labels == l], 100, label=l)
         xPos = np.median(X[data_labels == l])
@@ -235,7 +238,7 @@ def plot_XY(X, Y, title, data_labels, **kwargs):
         #     xPos = xPos - 0.4
         # if title == 'With prior' and l == '64 TE':
         #     xPos = xPos + 0.2
-        plt.text(xPos, yPos, l, fontsize=16, weight='bold')
+        plt.text(xPos, yPos, l, fontsize=fsize, weight='bold')
 
     xlabel = 'GPLVM-1 (Pseudotime)'
     ylabel = 'GPLVM-2'
