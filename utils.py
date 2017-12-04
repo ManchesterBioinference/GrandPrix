@@ -229,10 +229,10 @@ def plot_XY(X, Y, title, data_labels, **kwargs):
         plt.scatter(X[data_labels == l], Y[data_labels == l], 100, label=l)
         xPos = np.median(X[data_labels == l])
         yPos = np.median(Y[data_labels == l])
-        if title != 'With prior' and l == '32 TE':
-            xPos = xPos - 0.4
-        if title == 'With prior' and l == '64 TE':
-            xPos = xPos + 0.2
+        # if title != 'With prior' and l == '32 TE':
+        #     xPos = xPos - 0.4
+        # if title == 'With prior' and l == '64 TE':
+        #     xPos = xPos + 0.2
         plt.text(xPos, yPos, l, fontsize=16, weight='bold')
 
     xlabel = 'GPLVM-1 (Pseudotime)'
