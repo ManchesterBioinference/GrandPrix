@@ -39,7 +39,7 @@ def tau_to_cbtime(tau, startTime, endTime, timeDiff):
         t = np.abs(100 - t)
     return t
 
-def plot(title, xLabel, yLabel, xData, yData, cpt, xErr=None):
+def plot(title, xLabel, yLabel, xData, yData, cpt, xErr=None, **kwargs):
     plt.rcParams['axes.facecolor'] = 'white'
     plt.rcParams['axes.edgecolor'] = 'black'
     plt.figure(figsize=(8, 6))
@@ -59,6 +59,19 @@ def plot(title, xLabel, yLabel, xData, yData, cpt, xErr=None):
             color_map[i] = 'blue'
         else:
             color_map[i] = 'orange'
+
+    if 'datset' in kwargs:
+        cellCapture = OrderedDict((('0', 'red'), ('2', 'green'), ('4', 'blue'), ('7', 'orange')))
+        for i in range(0, len(cpt)):
+            if cpt[i] == 1:
+                color_map[i] = 'red'
+            elif cpt[i] == 2:
+                color_map[i] = 'green'
+            elif cpt[i] == 3:
+                color_map[i] = 'blue'
+            else:
+                color_map[i] = 'orange'
+
     # print(cellCapture)
     markers = [plt.Line2D([0, 0], [0, 0], color=color, marker='o', ms=10, linestyle='') for color in cellCapture.values()]
 
@@ -164,7 +177,7 @@ def plot_genes(pseudotimes, geneProfiles, geneData, cpt, prediction):
     xValues = np.array([1., 1.85, 2.7, 3.55])
     xString = np.array(['G2/M', 'G0/G1', 'S', 'G2/M'])
     plt.xticks(xValues, xString)
-    # plt.xlim(1., 3.55)
+    plt.xlim(1., 3.55)
 
     # Following codes are used just to add legends
     cellCycleStages = {'g0/g1': u'red', 's': u'green', 'g2/m': u'blue'}
@@ -247,3 +260,34 @@ def plot_XY(X, Y, title, data_labels, **kwargs):
     plt.xlabel(xlabel, fontsize=20)
     plt.ylabel(ylabel, fontsize=20)
     plt.title(title, fontsize=20)
+
+def correlation_dpt(xData, yData, cpt, ax, title):
+    cellCapture = OrderedDict((('0','red'), ('2','green'), ('4','blue'), ('7','orange')))
+    color_map = [0 for i in range(len(cpt))]
+
+    for i in range(0,len(cpt)):
+        if cpt[i] == 1:
+            color_map[i] = 'red'
+        elif cpt[i] == 2:
+            color_map[i] = 'green'
+        elif cpt[i] == 3:
+            color_map[i] = 'blue'
+        else:
+            color_map[i] = 'orange'
+
+    markers = [plt.Line2D([0,0],[0,0], color=color, marker='o', linestyle='') for color in cellCapture.values()]
+
+    # plt.figure(figsize=(5, 5))
+    ax.scatter(xData, yData, 10, c=color_map)
+    ax.plot( [0,0.7],[0,0.7], linewidth=3)
+    _=plt.xticks(fontsize=14)
+    _=plt.yticks(fontsize=14)
+    ax.set_xlabel('BGPLVM Pseudotime', fontsize=16)
+    ax.set_ylabel('Diffusion Pseudotime', fontsize=16)
+    ax.set_title(title, fontsize=18)
+    # plt.title("Correlation (No Prior) = %f"%(spearmanr(pTimes['pt_np_32_trun'].values, pTimes['dpt'].values)[0]), fontsize=20)
+    # plt.xlabel('BGPLVM', fontsize=20)
+    # plt.ylabel('DPT', fontsize=20)
+    # l = plt.legend(markers, cellCapture.keys(), numpoints=1, title='Capture', bbox_to_anchor=(1.15, 0.5), loc=10, fontsize=16)
+    ax.legend(markers, cellCapture.keys(), numpoints=1, title='Capture', fontsize=14, frameon=False)
+    # ax.setp(l.get_title(), fontsize=14)
