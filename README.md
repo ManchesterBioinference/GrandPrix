@@ -4,15 +4,34 @@ GrandPrix is a python package implementing the approach described in the paper "
 We have included a series of notebook reproducing most of the results in the paper.
 
 ## Installation
+<!--
 1. Install tensorflow - 'pip install tensorflow'
 1. Install GPflow. Only GPflow version 0.3.8 is support on GrandPrix beta version. See [here](https://github.com/GPflow/GPflow) for more ifnormation. 
+-->
+<!--
 ```
 git clone https://github.com/GPflow/GPflow.git
 cd GPflow
 git checkout 0.3.9
 pip install .
 ```
-
+-->
+```
+mkdir ~/envs
+virtualenv -p /usr/bin/python3.5 envs/oldgpflow
+oldgpflow
+alias oldgpflow="source ~/envs/oldgpflow/bin/activate"
+mkdir oldgpflow
+cd oldgpflow
+pip install -Iv tensorflow==1.8.0
+git clone  git@github.com:GPflow/GPflow.git 
+cd GPflow
+git reset --hard 3065dee
+pip install .
+pip install ipython
+pip install jupyter
+pip install matplotlib
+```
 
 
 
