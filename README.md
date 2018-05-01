@@ -1,7 +1,7 @@
 # GrandPrix
 GrandPrix is a python package implementing the approach described in the paper "GrandPrix: Scaling up the Bayesian GPLVM for single-cell data" by Sumon Ahmed, Magnus Rattray and Alexis Boukouvalas.
 
-We have included a series of notebook reproducing most of the results in the paper. Only GPflow version 0.3.8 is support on GrandPrix beta version. See [here](https://github.com/GPflow/GPflow) for more ifnormation. 
+We have included a series of notebook reproducing most of the results in the paper. Only [GPflow](https://github.com/GPflow/GPflow) version 0.3.8 is support on GrandPrix beta version.
 
 ## Installation
 <!--
