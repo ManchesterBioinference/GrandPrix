@@ -5,7 +5,7 @@ We have included a series of notebook reproducing most of the results in the pap
 
 ## Installation
 1. Install tensorflow - 'pip install tensorflow'
-1. Install GPflow. Currently only version 0.3.8 is support on GrandPrix. See [here](https://github.com/GPflow/GPflow) for more ifnormation. 
+1. Install GPflow. Only GPflow version 0.3.8 is support on GrandPrix beta version. See [here](https://github.com/GPflow/GPflow) for more ifnormation. 
 ```
 git clone https://github.com/GPflow/GPflow.git
 cd GPflow
