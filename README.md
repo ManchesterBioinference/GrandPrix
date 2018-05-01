@@ -34,7 +34,7 @@ pip install matplotlib
 ```
 ## Clone the betaVersion branch 
 
-To download the betaVersion branch only, run the following:
+To clone the betaVersion branch only, run the following:
 
 ```
 git clone -b betaVersion https://github.com/ManchesterBioinference/GrandPrix.git
