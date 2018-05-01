@@ -9,9 +9,9 @@ if sys.argv[l - 1] == 'float32':
 else:
     copyfile('gpflowrc64', 'gpflowrc')
 # import tensorflow as tf
-import gpflow
+import GPflow
 
-# gpflow.settings.dtypes.float_type = tf.float32
+# GPflow.settings.dtypes.float_type = tf.float32
 
 class GrandPrix(object):
     def __init__(self, Y, mData=None):
@@ -20,12 +20,12 @@ class GrandPrix(object):
         self.N, self.D = Y.shape
         self.Q = 1
         self.M = 10
-        # print(gpflow.settings.get_settings())
+        # print(GPflow.settings.get_settings())
     def MapTo01(self, y):
         return (y.copy() - y.min(0)) / (y.max(0) - y.min(0))
 
     def set_jitter_level(self, jitter_level):
-        gpflow.settings.numerics.jitter_level = jitter_level
+        GPflow.settings.numerics.jitter_level = jitter_level
 
     def initialize_priors(self, priors):
         if type(priors['Priormean']) is str:
@@ -42,7 +42,7 @@ class GrandPrix(object):
             else:
                 X_mean = Xmean
         else:
-            X_mean = self.MapTo01(gpflow.gplvm.PCA_reduce(self.Y, self.Q))
+            X_mean = self.MapTo01(GPflow.gplvm.PCA_reduce(self.Y, self.Q))
         X_var = Xvar * np.ones((self.N, self.Q))
         return (X_mean, X_var)
 
@@ -91,16 +91,16 @@ class GrandPrix(object):
                 var = kernel['var']
 
         if kernelName == 'RBF':
-            k = gpflow.ekernels.RBF(input_dim, lengthscales=ls, variance=var, ARD=True)
+            k = GPflow.ekernels.RBF(input_dim, lengthscales=ls, variance=var, ARD=True)
         elif kernelName == 'Matern32':
-            k = gpflow.kernels.Matern32(input_dim, lengthscales=ls, variance=var)
-            # k =  k + gpflow.kernels.White(input_dim, variance=0.01)
+            k = GPflow.kernels.Matern32(input_dim, lengthscales=ls, variance=var)
+            # k =  k + GPflow.kernels.White(input_dim, variance=0.01)
         elif kernelName == 'Periodic':
-            k = gpflow.kernels.PeriodicKernel(input_dim)
+            k = GPflow.kernels.PeriodicKernel(input_dim)
             k.lengthscales = ls
             k.period = 1.
         else:
-            k = gpflow.ekernels.RBF(input_dim)
+            k = GPflow.ekernels.RBF(input_dim)
         return  k
 
     def fixed_params(self, param_list):
@@ -113,7 +113,7 @@ class GrandPrix(object):
 
     def build_model(self, priors=None, vParams=None, **kwargs):
         # print('Inside build_model')
-        # print(gpflow.settings.get_settings())
+        # print(GPflow.settings.get_settings())
         if 'latent_dims' in kwargs:
             self.Q = kwargs.pop('latent_dims')
         if 'n_inducing_points' in kwargs:
@@ -128,10 +128,10 @@ class GrandPrix(object):
 
         if priors is not None:
             X_prior_mean, X_prior_var = self.initialize_priors(priors)
-            self.m = gpflow.gplvm.BayesianGPLVM(Y=self.Y, kern=kern, X_prior_mean=X_prior_mean, X_prior_var=X_prior_var,
+            self.m = GPflow.gplvm.BayesianGPLVM(Y=self.Y, kern=kern, X_prior_mean=X_prior_mean, X_prior_var=X_prior_var,
                                    X_mean=X_mean.copy(), X_var=X_var, Z=Z.copy(), M=self.M)
         else:
-            self.m = gpflow.gplvm.BayesianGPLVM(Y=self.Y, kern=kern, X_mean=X_mean.copy(), X_var=X_var, Z=Z.copy(), M=self.M)
+            self.m = GPflow.gplvm.BayesianGPLVM(Y=self.Y, kern=kern, X_mean=X_mean.copy(), X_var=X_var, Z=Z.copy(), M=self.M)
         self.m.likelihood.variance = 0.01
         self.m.likelihood.variance.fixed = False
 
