@@ -12,8 +12,8 @@ def fit_model(
         latent_mean=None,
         latent_var=0.1,
         inducing_inputs=None,
+        fix_parameters = None,
         predict=None,
-        fileName=None,
         dtype='float64',
         **kwargs):
 
@@ -29,11 +29,16 @@ def fit_model(
     #                                   latent_prior_mean, latent_prior_var, latent_mean, latent_var, inducing_inputs,
     #                                   dtype)
 
+    jitter = 1e-6
+    if 'jitter_level' in kwargs:
+        jitter = kwargs.pop('jitter_level')
+    m.set_jitter_level(jitter)
+    m.set_trainable(fix_parameters)
     m.build()
     maxitr = 1000
     disp = False
     if 'maxiter' in kwargs:
-        maxiter = kwargs.pop('maxiter')
+        maxitr = kwargs.pop('maxiter')
     if 'display' in kwargs:
         disp = kwargs.pop('display')
     m.fit(maxiter=maxitr, display=disp)

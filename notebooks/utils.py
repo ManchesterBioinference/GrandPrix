@@ -238,18 +238,22 @@ def plotcorrelation(X, Y, title, data_labels):
         l = plt.legend(loc="lower right", fontsize=14, ncol=2, title="Capture stages", borderaxespad=0., columnspacing=0.2, handletextpad=0.1)
         plt.setp(l.get_title(), fontsize=16)
 
-def plot_XY(X, Y, title, data_labels, **kwargs):
+def plot_XY(X, Y, title, data_labels, label_order=None, **kwargs):
     # plt.rcParams['axes.facecolor'] = 'white'
     # plt.rcParams['axes.edgecolor'] = 'black'
     # plt.rc('axes', color_cycle=['royalblue', 'orange', 'green', 'red', 'blueviolet', 'sienna', 'hotpink', 'gray', 'y', 'c'])
 
-    label_order = ['1', '2', '4', '8', '16', '32 ICM', '32 TE', '64 PE', '64 TE', '64 EPI']
+    if label_order is None:
+        label_order = ['1', '2', '4', '8', '16', '32 ICM', '32 TE', '64 PE', '64 TE', '64 EPI']
+
+    mSize = 100
+    if 'ms' in kwargs:    mSize = kwargs.pop('ms')
 
     fsize = 16
     if 'fontsize' in kwargs:    fsize = kwargs.pop('fontsize')
 
     for l in label_order:
-        plt.scatter(X[data_labels == l], Y[data_labels == l], 100, label=l)
+        plt.scatter(X[data_labels == l], Y[data_labels == l], mSize, label=l)
         xPos = np.median(X[data_labels == l])
         yPos = np.median(Y[data_labels == l])
         # if title != 'With prior' and l == '32 TE':

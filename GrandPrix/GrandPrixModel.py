@@ -162,6 +162,15 @@ class GrandPrixModel(object):
     def get_model(self):
         return self.m.as_pandas_table()
 
+    def set_trainable(self, paramlist=None):
+        if paramlist is not None:
+            if 'kernel_lengthscales' in paramlist:  self.m.kern.lengthscales.trainable = False
+            if 'kernel_variance' in paramlist:  self.m.kern.variance.trainable = False
+            if 'likelihood_variance' in paramlist: self.m.likelihood.variance.trainable = False
+            if 'inducing_inputs' in paramlist:  self.m.feature.Z.trainable = False
+            if 'latent_mean' in paramlist:  self.m.X_mean.trainable = False
+            if 'latent_variance' in paramlist: self.m.X_var.trainable = False
+
     def set_jitter_level(self, jitter_level):
         gpflow.settings.numerics.jitter_level = jitter_level
 
