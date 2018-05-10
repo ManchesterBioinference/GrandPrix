@@ -308,3 +308,23 @@ def correlation_dpt(xData, yData, cpt, ax, title, diagLine=False):
     # l = plt.legend(markers, cellCapture.keys(), numpoints=1, title='Capture', bbox_to_anchor=(1.15, 0.5), loc=10, fontsize=16)
     ax.legend(markers, cellCapture.keys(), numpoints=1, title='Capture', fontsize=14, frameon=False)
     # ax.setp(l.get_title(), fontsize=14)
+
+def plot_robustness_across_prior_variance(array_of_values, single_value, title, xlabel, ylabel):
+    xVals = np.array([0.01, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65])
+    xStrings = np.array(['0.01', '0.1', '0.2', '0.5', '0.8', '1.', '1.5', '2.', '3.', '5.', '10.', '25.', '50.', '100.', 'No Prior'])
+
+    plt.scatter(xVals, array_of_values, linewidth=5)
+    plt.plot(xVals, array_of_values, linewidth=4)
+
+    plt.ylim([0., 1.0])
+
+    plt.xticks(np.append(xVals, 70), xStrings, rotation=90, fontsize=16)
+    plt.yticks(fontsize=14)
+
+    plt.axvline(x=5, ymax=array_of_values[1], linestyle='--', linewidth=5, c='black')
+    plt.scatter(70, single_value, linewidth=5, c='red')
+    plt.axvline(x=70, ymax=single_value, linestyle='--', linewidth=5, c='red')
+
+    plt.xlabel(xlabel, fontsize=20)
+    plt.ylabel(ylabel, fontsize=20)
+    plt.title(title, fontsize=20)
