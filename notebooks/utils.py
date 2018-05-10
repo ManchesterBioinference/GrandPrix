@@ -13,6 +13,13 @@ matplotlib.rcParams['axes.edgecolor'] = 'black'
 # plt.rc('axes', color_cycle=['royalblue', 'orange', 'green', 'red', 'blueviolet', 'sienna', 'hotpink', 'gray', 'y', 'c'])
 plt.rc('axes', color_cycle=['royalblue', 'green', 'sienna', 'c', 'orange', 'red', 'blueviolet', 'hotpink', 'gray', 'y'])
 
+def getari_for_latent_space(X, truelabels):
+    from sklearn.cluster import KMeans
+    from sklearn.metrics.cluster import adjusted_rand_score
+    kmeans = KMeans(n_clusters=10, random_state=0).fit(X)
+    kmeans.labels_ = kmeans.labels_ + 1
+    ARI = adjusted_rand_score(truelabels, kmeans.labels_)
+    return ARI
 
 def calcroughness(x, pt):
     x=np.atleast_2d(x)

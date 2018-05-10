@@ -14,6 +14,7 @@ def fit_model(
         inducing_inputs=None,
         fix_parameters = None,
         predict=None,
+        jitter=1e-6,
         dtype='float64',
         **kwargs):
 
@@ -28,21 +29,20 @@ def fit_model(
     # m = GrandPrixModel(data, n_latent_dims, n_inducing_points, kernel, mData,
     #                                   latent_prior_mean, latent_prior_var, latent_mean, latent_var, inducing_inputs,
     #                                   dtype)
-
-    jitter = 1e-6
-    if 'jitter_level' in kwargs:
-        jitter = kwargs.pop('jitter_level')
     m.set_jitter_level(jitter)
     m.set_trainable(fix_parameters)
     m.build()
+
     maxitr = 1000
     disp = False
     if 'maxiter' in kwargs:
         maxitr = kwargs.pop('maxiter')
     if 'display' in kwargs:
         disp = kwargs.pop('display')
+
     m.fit(maxiter=maxitr, display=disp)
     posterior = m.get_latent_dims()
+
     if predict is not None:
         prediction = m.predict(predict)
         posterior = posterior + prediction
