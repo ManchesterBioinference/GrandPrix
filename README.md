@@ -51,6 +51,7 @@ jupyter notebook
 | [McDavid](./McDavid.ipynb)       | Application of GrandPrix to cell cycle data. |
 | [Shalek](./notebooks/Shalek.ipynb)| Application of GrandPrix to single-cell RNA_seq from mouse dentritic cells. |
 | [Droplet_DPT](./notebooks/Droplet_DPT.ipynb)| Application of GrandPrix to droplet based single-cell RNA_seq data. |
+| [Droplet_68K](./notebooks/Droplet_68K.ipynb)| Application of GrandPrix to ~68k PBMCs, focuses on the importance of model initialisation. |
 | [Guo](./notebooks/Guo.ipynb)| Application of extendend 2-D GrandPrix model to embryonic stem cells.|
 <!--
 | Zheng| Sampling from the BGP model. |
