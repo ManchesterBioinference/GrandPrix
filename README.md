@@ -6,9 +6,9 @@ GrandPrix is a package for non-linear probabilistic dimension reduction algorith
 Sumon Ahmed, Magnus Rattray and Alexis Boukouvalas, bioRxiv, 2017.](https://www.biorxiv.org/content/early/2018/05/01/227843)
 
 To replicate the results in the paper please use the [`betaVersion`](https://github.com/ManchesterBioinference/GrandPrix/tree/betaVersion) branch. The [`master`](https://github.com/ManchesterBioinference/GrandPrix/tree/master) branch works with the latest version of `GPflow`.
-
+```
 `N.B` The package contains several large data files which are needed to run the example notebooks. Please be sure that your system has [Git Large File Storage (Git LFS)](https://help.github.com/articles/installing-git-large-file-storage/#platform-mac) installed to download these large data files.  
-
+```
 ## Installation
 If you have any problems with installation see the script at the bottom of the page for a detailed setup guide from a new python environment. 
 
