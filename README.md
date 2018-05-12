@@ -3,6 +3,8 @@ GrandPrix is a python package implementing the approach described in the paper "
 
 We have included a series of notebook reproducing most of the results in the paper. Only [GPflow](https://github.com/GPflow/GPflow) version 0.3.8 is supported on GrandPrix [`betaVersion`](https://github.com/ManchesterBioinference/GrandPrix/tree/master). The [`master`](https://github.com/ManchesterBioinference/GrandPrix/tree/master) branch works with the latest version of `GPflow`.
 
+`N.B.` The package contains several large data files which are needed to run the example notebooks. Please be sure that your system has [Git Large File Storage (Git LFS)](https://help.github.com/articles/installing-git-large-file-storage/#platform-mac) installed to download these large data files.
+
 ## Installation
 <!--
 1. Install tensorflow - 'pip install tensorflow'
