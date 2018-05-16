@@ -53,7 +53,7 @@ jupyter notebook
 | [Droplet_DPT](./notebooks/Droplet_DPT.ipynb)| Application of GrandPrix to droplet based single-cell RNA_seq data. |
 | [Droplet_68K](./notebooks/Droplet_68K.ipynb)| Application of GrandPrix to ~68k PBMCs, models optimising and fixing inducing variables. |
 | [Guo](./notebooks/Guo.ipynb)| Application of extendend 2-D GrandPrix model to embryonic stem cells.|
-| [Analysing_posterior_variance](./notebooks/Analysing_posterior_variance.ipynb)| Analysing posterior distributions.|
+| [Analysing_posterior_variance](./notebooks/Analysing_posterior_variance.ipynb)| Analyse posterior distributions.|
 <!--
 | Zheng| Sampling from the BGP model. |
 -->
