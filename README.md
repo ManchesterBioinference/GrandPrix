@@ -48,11 +48,12 @@ jupyter notebook
 | File <br> name | Description | 
 | --- | --- | 
 | <a href="./notebooks/Windram.ipynb" target="_blank">Windram</a>| Application of GrandPrix to microarray data. |
-| [McDavid](./McDavid.ipynb)       | Application of GrandPrix to cell cycle data. |
+| [McDavid](./notebooks/McDavid.ipynb)       | Application of GrandPrix to cell cycle data. |
 | [Shalek](./notebooks/Shalek.ipynb)| Application of GrandPrix to single-cell RNA_seq from mouse dentritic cells. |
 | [Droplet_DPT](./notebooks/Droplet_DPT.ipynb)| Application of GrandPrix to droplet based single-cell RNA_seq data. |
 | [Droplet_68K](./notebooks/Droplet_68K.ipynb)| Application of GrandPrix to ~68k PBMCs, focuses on the importance of model initialisation. |
 | [Guo](./notebooks/Guo.ipynb)| Application of extendend 2-D GrandPrix model to embryonic stem cells.|
+| [Analysing_posterior_variance](./notebooks/Analysing_posterior_variance.ipynb)| Analysing posterior distributions.|
 <!--
 | Zheng| Sampling from the BGP model. |
 -->
