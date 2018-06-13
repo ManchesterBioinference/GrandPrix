@@ -33,10 +33,11 @@ class GrandPrixModel(object):
     This approach minimizes the KL divergence between the variational GP and the full posterior GP which allows it
     to avoid overfitting as well as to approximate the exact GP posterior.
     
-    -- Allows model fitting and prediction with informative prior over the latent space.
+    Allows model fitting and prediction with informative prior over the latent space.
     
     Parameters
     ----------
+
     data: array-like, shape N x D
         Observed data, where N is the number of samples and D is the number of features.
         
@@ -52,8 +53,10 @@ class GrandPrixModel(object):
         Kernels are parameterize by a set of hyperparameters, i.e. lengthscale, variance, etc which can be optimized during model fitting.
     
     latent_prior_mean: array-like, shape N x n_latent_dims, optional (default: 0)
+        write description
     
     latent_prior_var: array-like, shape N x n_latent_dims, optional (default: 1.)
+        write description
     
     latent_mean: array-like, shape N x n_latent_dims, optional (default: PCA)
         Initial mean values of the distribution over the latent dimensions.
@@ -62,11 +65,9 @@ class GrandPrixModel(object):
         Initial variance of the distribution over the latent dimensions.
         
     inducing_inputs: array-like, shape n_inducing_points x n_latent_dims, optional (default: randome subset from laten_mean)
-    
-    References
-    ----------
-    
+        this is something
     """
+
     def __init__(self, data, n_latent_dims=1, n_inducing_points=10, kernel={'name':'RBF', 'ls':1.0, 'var':1.0}, mData=None,
                  latent_prior_mean=None, latent_prior_var=1., latent_mean=None, latent_var=0.1, inducing_inputs=None, dtype='float64'):
         self.Y = None

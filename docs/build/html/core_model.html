@@ -1,0 +1,336 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Core model &mdash; GrandPrix 0.5.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="api" href="api.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="intro.html" class="icon icon-home"> GrandPrix
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.5.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TutorialsAndExamples.html">Tutorials and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="APIandArchitecture.html">API and architecture</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="api.html">api</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Core model</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="intro.html">GrandPrix</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="intro.html">Docs</a> &raquo;</li>
+        
+          <li><a href="APIandArchitecture.html">API and architecture</a> &raquo;</li>
+        
+      <li>Core model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/core_model.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-GrandPrix.GrandPrixModel">
+<span id="core-model"></span><h1>Core model<a class="headerlink" href="#module-GrandPrix.GrandPrixModel" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="GrandPrix.GrandPrixModel.GrandPrixModel">
+<em class="property">class </em><code class="descclassname">GrandPrix.GrandPrixModel.</code><code class="descname">GrandPrixModel</code><span class="sig-paren">(</span><em>data</em>, <em>n_latent_dims=1</em>, <em>n_inducing_points=10</em>, <em>kernel={'name': 'RBF'</em>, <em>'ls': 1.0</em>, <em>'var': 1.0}</em>, <em>mData=None</em>, <em>latent_prior_mean=None</em>, <em>latent_prior_var=1.0</em>, <em>latent_mean=None</em>, <em>latent_var=0.1</em>, <em>inducing_inputs=None</em>, <em>dtype='float64'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/GrandPrix/GrandPrixModel.html#GrandPrixModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>GrandPrix: Scaling up the Bayesian Gaussian Process Latent Variable Model (BGPLVM).</p>
+<p>Non-linear probabilistic dimension reduction that uses sparse variational approximation 
+to project data to a lower dimensional space.</p>
+<p>Sparse approximations are useful techniques for practical inference of Gaussian processes (GP) to deal 
+with large datasets. Sparse approximations rely on a small number of parameters termed inducing 
+or auxiliary points that approximate the posterior distribution over functions. GrandPrix uses 
+the Variational Free Energy (VFE) approximation that tries to maximize a lower bound to the 
+exact marginal likelihood in order to select the inducing points and model hyperparameters jointly.
+This approach minimizes the KL divergence between the variational GP and the full posterior GP which allows it
+to avoid overfitting as well as to approximate the exact GP posterior.</p>
+<p>– Allows model fitting and prediction with informative prior over the latent space.</p>
+<dl class="docutils">
+<dt>data: array-like, shape N x D</dt>
+<dd>Observed data, where N is the number of samples and D is the number of features.</dd>
+<dt>n_latent_dims: int, optional (default: 1)</dt>
+<dd>Number of latent dimentions to compute.</dd>
+<dt>n_inducing_points: int, optional (default: 10)</dt>
+<dd>Number of inducing or auxiliary points.</dd>
+<dt>kernel: gpflow.kernels object, optional (default: RBF kernel with lengthscale and variance set to 1.0)</dt>
+<dd>Kernel functions are used to compute the covariance among datapoints. They impose constraints such as smoothness, periodicity on the function being
+learned that is shared by all datapoints.
+Kernels are parameterize by a set of hyperparameters, i.e. lengthscale, variance, etc which can be optimized during model fitting.</dd>
+</dl>
+<p>latent_prior_mean: array-like, shape N x n_latent_dims, optional (default: 0)</p>
+<p>latent_prior_var: array-like, shape N x n_latent_dims, optional (default: 1.)</p>
+<dl class="docutils">
+<dt>latent_mean: array-like, shape N x n_latent_dims, optional (default: PCA)</dt>
+<dd>Initial mean values of the distribution over the latent dimensions.</dd>
+<dt>latent_var: array-like, shape N x n_latent_dims, optional (default: 0.1)</dt>
+<dd>Initial variance of the distribution over the latent dimensions.</dd>
+</dl>
+<p>inducing_inputs: array-like, shape n_inducing_points x n_latent_dims, optional (default: randome subset from laten_mean)</p>
+<dl class="method">
+<dt id="GrandPrix.GrandPrixModel.GrandPrixModel.build">
+<code class="descname">build</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/GrandPrix/GrandPrixModel.html#GrandPrixModel.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel.build" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the model into a Tensorflow graph.
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="GrandPrix.GrandPrixModel.GrandPrixModel.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>maxiter=1000</em>, <em>display=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/GrandPrix/GrandPrixModel.html#GrandPrixModel.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the BGPLVM model.
+:param maxiter: int, optional (default: 1000)</p>
+<blockquote>
+<div>Maximum number of iterations to perform.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>display</strong> – bool, optional (default: False)
+If set to True, print convergence messages.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="GrandPrix.GrandPrixModel.GrandPrixModel.get_latent_dims">
+<code class="descname">get_latent_dims</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/GrandPrix/GrandPrixModel.html#GrandPrixModel.get_latent_dims"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel.get_latent_dims" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get predictive distribuiton over latent dimensions of the Gaussian Process Latent Variable Model.
+:return:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>latent_mean: array-like, shape N x n_latent_dims</dt>
+<dd>Mean values of the predictive distribution over the latent dimensions.</dd>
+<dt>latent_var: array-like, shape N x n_latent_dims</dt>
+<dd>Variance of the predictive distribution over the latent dimensions.</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="GrandPrix.GrandPrixModel.GrandPrixModel.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>Xnew</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/GrandPrix/GrandPrixModel.html#GrandPrixModel.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict posterior mean and variance using the BGPLVM. The prediction can also be done on the unfitted model using the Gaussian Process prior. 
+:param</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>Xnew: array-like, shape n_sample x n_latent_dims</dt>
+<dd>n_sample is the number of query points where the prediction will be evaluated.</dd>
+</dl>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
+<dt>data_mean: array-like, shape N x D</dt>
+<dd>Mean values of the predictive distribution at the query points.</dd>
+<dt>data_var: array-like, shape N x D</dt>
+<dd>Variance of the predictive distribution at the query points.</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="api.html" class="btn btn-neutral" title="api" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Manchester Bioinference Group.
+      Last updated on True.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.5.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>
