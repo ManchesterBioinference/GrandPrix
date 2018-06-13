@@ -17,8 +17,9 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
+import os
+import sys
+sys.path.insert(0, os.path.abspath('../../'))
 # sys.path.insert(0, os.path.abspath('.'))
 # from pathlib import Path
 # HERE = Path(__file__).parent
@@ -33,9 +34,15 @@
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.autodoc',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.githubpages']
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.coverage',
+    'numpydoc']
+
+#sphinx.ext.viewcode
+
+numpydoc_show_class_members = True
+numpydoc_class_members_toctree = False
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -90,12 +97,16 @@ todo_include_todos = False
 html_theme = 'sphinx_rtd_theme'
 
 # SA added this
-html_show_sourcelink = True
-html_context = {
-"display_github": False, # Add 'Edit on Github' link instead of 'View page source'
-"last_updated": True,
-"commit": False,
-}
+html_theme_options = dict(
+    navigation_depth=2,
+)
+html_context = dict(
+    display_github=True,      # Integrate GitHub
+    github_user='ManchesterBioinference',   # Username
+    github_repo='GrandPrix',     # Repo name
+    github_version='master',  # Version
+    conf_py_path='/docs/',    # Path in the checkout to the docs root
+)
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -107,6 +118,9 @@ html_context = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+def setup(app):
+    app.add_stylesheet('css/custom.css')
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -128,7 +142,6 @@ html_sidebars = {
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'GrandPrixdoc'
-
 
 # -- Options for LaTeX output ---------------------------------------------
 

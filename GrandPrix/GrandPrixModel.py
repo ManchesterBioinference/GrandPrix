@@ -20,54 +20,38 @@ def MapTo01(y):
 
 class GrandPrixModel(object):
     """
-    GrandPrix: Scaling up the Bayesian Gaussian Process Latent Variable Model (BGPLVM).
-    
-    Non-linear probabilistic dimension reduction that uses sparse variational approximation 
-    to project data to a lower dimensional space.
-    
-    Sparse approximations are useful techniques for practical inference of Gaussian processes (GP) to deal 
-    with large datasets. Sparse approximations rely on a small number of parameters termed inducing 
-    or auxiliary points that approximate the posterior distribution over functions. GrandPrix uses 
-    the Variational Free Energy (VFE) approximation that tries to maximize a lower bound to the 
-    exact marginal likelihood in order to select the inducing points and model hyperparameters jointly.
-    This approach minimizes the KL divergence between the variational GP and the full posterior GP which allows it
-    to avoid overfitting as well as to approximate the exact GP posterior.
-    
-    Allows model fitting and prediction with informative prior over the latent space.
-    
     Parameters
     ----------
+    data : `array-like`, shape `N` x `D`
+        Observed data, where `N` is the number of samples and `D` is the number of features.
 
-    data: array-like, shape N x D
-        Observed data, where N is the number of samples and D is the number of features.
-        
-    n_latent_dims: int, optional (default: 1)
+    n_latent_dims : `int`, optional (default: 1)
         Number of latent dimentions to compute.
-        
-    n_inducing_points: int, optional (default: 10)
+
+    n_inducing_points : `int`, optional (default: 10)
         Number of inducing or auxiliary points. 
-          
-    kernel: gpflow.kernels object, optional (default: RBF kernel with lengthscale and variance set to 1.0)
+
+    kernel : ``gpflow.kernels`` object, optional (default: RBF kernel with lengthscale and variance set to 1.0)
         Kernel functions are used to compute the covariance among datapoints. They impose constraints such as smoothness, periodicity on the function being
         learned that is shared by all datapoints.
         Kernels are parameterize by a set of hyperparameters, i.e. lengthscale, variance, etc which can be optimized during model fitting.
-    
-    latent_prior_mean: array-like, shape N x n_latent_dims, optional (default: 0)
-        write description
-    
-    latent_prior_var: array-like, shape N x n_latent_dims, optional (default: 1.)
-        write description
-    
-    latent_mean: array-like, shape N x n_latent_dims, optional (default: PCA)
-        Initial mean values of the distribution over the latent dimensions.
-        
-    latent_var: array-like, shape N x n_latent_dims, optional (default: 0.1)
-        Initial variance of the distribution over the latent dimensions.
-        
-    inducing_inputs: array-like, shape n_inducing_points x n_latent_dims, optional (default: randome subset from laten_mean)
-        this is something
-    """
 
+    latent_prior_mean : `array-like`, shape `N` x `n_latent_dims`, optional (default: 0)
+        write description
+
+    latent_prior_var : `array-like`, shape `N` x `n_latent_dims`, optional (default: 1.)
+        write description
+
+    latent_mean : `array-like`, shape `N x n_latent_dims`, optional (default: PCA)
+        Initial mean values of the distribution over the latent dimensions.
+
+    latent_var : `array-like`, shape `N` x `n_latent_dims`, optional (default: 0.1)
+        Initial variance of the distribution over the latent dimensions.
+
+    inducing_inputs : `array-like`, shape `n_inducing_points` x `n_latent_dims`, optional (default: random subset from laten_mean)
+        this is something
+   
+    """
     def __init__(self, data, n_latent_dims=1, n_inducing_points=10, kernel={'name':'RBF', 'ls':1.0, 'var':1.0}, mData=None,
                  latent_prior_mean=None, latent_prior_var=1., latent_mean=None, latent_var=0.1, inducing_inputs=None, dtype='float64'):
         self.Y = None
@@ -105,20 +89,26 @@ class GrandPrixModel(object):
         return "%s"%(self.m)
 
     def build(self):
-        """
+        r"""
         Build the model into a Tensorflow graph.
-        :return: 
+        
         """
+
         self.m.compile()
 
     def fit(self, maxiter=1000, display=False):
-        """
+        r"""
         Fit the BGPLVM model.
-        :param maxiter: int, optional (default: 1000)
+        
+        Parameters
+        ----------
+        maxiter : `int`, optional (default: 1000)
             Maximum number of iterations to perform.
-        :param display: bool, optional (default: False)
+        display : *bool*, optional (default: False)
             If set to True, print convergence messages. 
+        
         """
+
         opt = gpflow.train.ScipyOptimizer()
 
         try:
@@ -130,17 +120,23 @@ class GrandPrixModel(object):
 
 
     def predict(self, Xnew):
-        """
+        r"""
         Predict posterior mean and variance using the BGPLVM. The prediction can also be done on the unfitted model using the Gaussian Process prior. 
-        :param 
-            Xnew: array-like, shape n_sample x n_latent_dims
-                n_sample is the number of query points where the prediction will be evaluated.
-        :return:
-            data_mean: array-like, shape N x D
-                Mean values of the predictive distribution at the query points.
-            data_var: array-like, shape N x D
-                Variance of the predictive distribution at the query points.
+        
+        Parameters
+        ----------
+        Xnew : `array-like`, shape `n_sample` x `n_latent_dims`
+            `n_sample` is the number of query points where the prediction will be evaluated.
+        
+        Returns
+        -------
+        data_mean : `array-like`, shape `N` x `D`
+            Mean values of the predictive distribution at the query points.
+        data_var : `array-like`, shape `N` x `D`
+            Variance of the predictive distribution at the query points.
+        
         """
+
         if type(Xnew) is int:
             latent_mean = self.get_latent_dims()[0]
             n_points = Xnew
@@ -150,14 +146,18 @@ class GrandPrixModel(object):
         return self.m.predict_y(Xnew)
 
     def get_latent_dims(self):
-        """
+        r"""
         Get predictive distribuiton over latent dimensions of the Gaussian Process Latent Variable Model.
-        :return: 
-            latent_mean: array-like, shape N x n_latent_dims
-                Mean values of the predictive distribution over the latent dimensions.
-            latent_var: array-like, shape N x n_latent_dims
-                Variance of the predictive distribution over the latent dimensions.
+        
+        Returns
+        -------
+        latent_mean : `array-like`, shape `N` x `n_latent_dims`
+            Mean values of the predictive distribution over the latent dimensions.
+        latent_var : `array-like`, shape `N` x `n_latent_dims`
+            Variance of the predictive distribution over the latent dimensions.
+        
         """
+
         return (self.m.X_mean.read_value()[:, 0:self.Q], self.m.X_var.read_value()[:, 0:self.Q])
 
     def get_model(self):

@@ -27,6 +27,7 @@
   
     <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="api" href="api.html" /> 
@@ -143,7 +144,9 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/core_model.rst.txt" rel="nofollow"> View page source</a>
+            
+              <a href="https://github.com/ManchesterBioinference/GrandPrix//master/docs/core_model.rst" class="fa fa-github"> Edit on GitHub</a>
+            
           
         
       </li>
@@ -160,59 +163,128 @@
 <span id="core-model"></span><h1>Core model<a class="headerlink" href="#module-GrandPrix.GrandPrixModel" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="GrandPrix.GrandPrixModel.GrandPrixModel">
-<em class="property">class </em><code class="descclassname">GrandPrix.GrandPrixModel.</code><code class="descname">GrandPrixModel</code><span class="sig-paren">(</span><em>data</em>, <em>n_latent_dims=1</em>, <em>n_inducing_points=10</em>, <em>kernel={'name': 'RBF'</em>, <em>'ls': 1.0</em>, <em>'var': 1.0}</em>, <em>mData=None</em>, <em>latent_prior_mean=None</em>, <em>latent_prior_var=1.0</em>, <em>latent_mean=None</em>, <em>latent_var=0.1</em>, <em>inducing_inputs=None</em>, <em>dtype='float64'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/GrandPrix/GrandPrixModel.html#GrandPrixModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>GrandPrix: Scaling up the Bayesian Gaussian Process Latent Variable Model (BGPLVM).</p>
-<p>Non-linear probabilistic dimension reduction that uses sparse variational approximation 
-to project data to a lower dimensional space.</p>
-<p>Sparse approximations are useful techniques for practical inference of Gaussian processes (GP) to deal 
-with large datasets. Sparse approximations rely on a small number of parameters termed inducing 
-or auxiliary points that approximate the posterior distribution over functions. GrandPrix uses 
-the Variational Free Energy (VFE) approximation that tries to maximize a lower bound to the 
-exact marginal likelihood in order to select the inducing points and model hyperparameters jointly.
-This approach minimizes the KL divergence between the variational GP and the full posterior GP which allows it
-to avoid overfitting as well as to approximate the exact GP posterior.</p>
-<p>– Allows model fitting and prediction with informative prior over the latent space.</p>
-<dl class="docutils">
-<dt>data: array-like, shape N x D</dt>
-<dd>Observed data, where N is the number of samples and D is the number of features.</dd>
-<dt>n_latent_dims: int, optional (default: 1)</dt>
-<dd>Number of latent dimentions to compute.</dd>
-<dt>n_inducing_points: int, optional (default: 10)</dt>
-<dd>Number of inducing or auxiliary points.</dd>
-<dt>kernel: gpflow.kernels object, optional (default: RBF kernel with lengthscale and variance set to 1.0)</dt>
-<dd>Kernel functions are used to compute the covariance among datapoints. They impose constraints such as smoothness, periodicity on the function being
+<em class="property">class </em><code class="descclassname">GrandPrix.GrandPrixModel.</code><code class="descname">GrandPrixModel</code><span class="sig-paren">(</span><em>data</em>, <em>n_latent_dims=1</em>, <em>n_inducing_points=10</em>, <em>kernel={'ls': 1.0</em>, <em>'name': 'RBF'</em>, <em>'var': 1.0}</em>, <em>mData=None</em>, <em>latent_prior_mean=None</em>, <em>latent_prior_var=1.0</em>, <em>latent_mean=None</em>, <em>latent_var=0.1</em>, <em>inducing_inputs=None</em>, <em>dtype='float64'</em><span class="sig-paren">)</span><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>D</cite></span></dt>
+<dd><p class="first last">Observed data, where <cite>N</cite> is the number of samples and <cite>D</cite> is the number of features.</p>
+</dd>
+<dt><strong>n_latent_dims</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>int</cite>, optional (default: 1)</span></dt>
+<dd><p class="first last">Number of latent dimentions to compute.</p>
+</dd>
+<dt><strong>n_inducing_points</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>int</cite>, optional (default: 10)</span></dt>
+<dd><p class="first last">Number of inducing or auxiliary points.</p>
+</dd>
+<dt><strong>kernel</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><code class="docutils literal notranslate"><span class="pre">gpflow.kernels</span></code> object, optional (default: RBF kernel with lengthscale and variance set to 1.0)</span></dt>
+<dd><p class="first last">Kernel functions are used to compute the covariance among datapoints. They impose constraints such as smoothness, periodicity on the function being
 learned that is shared by all datapoints.
-Kernels are parameterize by a set of hyperparameters, i.e. lengthscale, variance, etc which can be optimized during model fitting.</dd>
+Kernels are parameterize by a set of hyperparameters, i.e. lengthscale, variance, etc which can be optimized during model fitting.</p>
+</dd>
+<dt><strong>latent_prior_mean</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>n_latent_dims</cite>, optional (default: 0)</span></dt>
+<dd><p class="first last">write description</p>
+</dd>
+<dt><strong>latent_prior_var</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>n_latent_dims</cite>, optional (default: 1.)</span></dt>
+<dd><p class="first last">write description</p>
+</dd>
+<dt><strong>latent_mean</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N x n_latent_dims</cite>, optional (default: PCA)</span></dt>
+<dd><p class="first last">Initial mean values of the distribution over the latent dimensions.</p>
+</dd>
+<dt><strong>latent_var</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>n_latent_dims</cite>, optional (default: 0.1)</span></dt>
+<dd><p class="first last">Initial variance of the distribution over the latent dimensions.</p>
+</dd>
+<dt><strong>inducing_inputs</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>n_inducing_points</cite> x <cite>n_latent_dims</cite>, optional (default: random subset from laten_mean)</span></dt>
+<dd><p class="first last">this is something</p>
+</dd>
 </dl>
-<p>latent_prior_mean: array-like, shape N x n_latent_dims, optional (default: 0)</p>
-<p>latent_prior_var: array-like, shape N x n_latent_dims, optional (default: 1.)</p>
-<dl class="docutils">
-<dt>latent_mean: array-like, shape N x n_latent_dims, optional (default: PCA)</dt>
-<dd>Initial mean values of the distribution over the latent dimensions.</dd>
-<dt>latent_var: array-like, shape N x n_latent_dims, optional (default: 0.1)</dt>
-<dd>Initial variance of the distribution over the latent dimensions.</dd>
-</dl>
-<p>inducing_inputs: array-like, shape n_inducing_points x n_latent_dims, optional (default: randome subset from laten_mean)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#GrandPrix.GrandPrixModel.GrandPrixModel.build" title="GrandPrix.GrandPrixModel.GrandPrixModel.build"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build</span></code></a>()</td>
+<td>Build the model into a Tensorflow graph.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#GrandPrix.GrandPrixModel.GrandPrixModel.fit" title="GrandPrix.GrandPrixModel.GrandPrixModel.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([maxiter,&nbsp;display])</td>
+<td>Fit the BGPLVM model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#GrandPrix.GrandPrixModel.GrandPrixModel.get_latent_dims" title="GrandPrix.GrandPrixModel.GrandPrixModel.get_latent_dims"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_latent_dims</span></code></a>()</td>
+<td>Get predictive distribuiton over latent dimensions of the Gaussian Process Latent Variable Model.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#GrandPrix.GrandPrixModel.GrandPrixModel.predict" title="GrandPrix.GrandPrixModel.GrandPrixModel.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(Xnew)</td>
+<td>Predict posterior mean and variance using the BGPLVM.</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="70%" />
+<col width="30%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>get_model</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>set_X_mean</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>set_X_prior_mean</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>set_X_prior_var</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>set_X_var</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>set_Y</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>set_inducing_inputs</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>set_jitter_level</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>set_kern</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>set_trainable</strong></td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="GrandPrix.GrandPrixModel.GrandPrixModel.build">
-<code class="descname">build</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/GrandPrix/GrandPrixModel.html#GrandPrixModel.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel.build" title="Permalink to this definition">¶</a></dt>
-<dd><p>Build the model into a Tensorflow graph.
-:return:</p>
+<code class="descname">build</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel.build" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the model into a Tensorflow graph.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="GrandPrix.GrandPrixModel.GrandPrixModel.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>maxiter=1000</em>, <em>display=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/GrandPrix/GrandPrixModel.html#GrandPrixModel.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fit the BGPLVM model.
-:param maxiter: int, optional (default: 1000)</p>
-<blockquote>
-<div>Maximum number of iterations to perform.</div></blockquote>
+<code class="descname">fit</code><span class="sig-paren">(</span><em>maxiter=1000</em>, <em>display=False</em><span class="sig-paren">)</span><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the BGPLVM model.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>display</strong> – bool, optional (default: False)
-If set to True, print convergence messages.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>maxiter</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>int</cite>, optional (default: 1000)</span></dt>
+<dd><p class="first last">Maximum number of iterations to perform.</p>
+</dd>
+<dt><strong>display</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><em>bool</em>, optional (default: False)</span></dt>
+<dd><p class="first last">If set to True, print convergence messages.</p>
+</dd>
+</dl>
+</td>
 </tr>
 </tbody>
 </table>
@@ -220,39 +292,48 @@ If set to True, print convergence messages.</td>
 
 <dl class="method">
 <dt id="GrandPrix.GrandPrixModel.GrandPrixModel.get_latent_dims">
-<code class="descname">get_latent_dims</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/GrandPrix/GrandPrixModel.html#GrandPrixModel.get_latent_dims"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel.get_latent_dims" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get predictive distribuiton over latent dimensions of the Gaussian Process Latent Variable Model.
-:return:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>latent_mean: array-like, shape N x n_latent_dims</dt>
-<dd>Mean values of the predictive distribution over the latent dimensions.</dd>
-<dt>latent_var: array-like, shape N x n_latent_dims</dt>
-<dd>Variance of the predictive distribution over the latent dimensions.</dd>
-</dl>
-</div></blockquote>
-</dd></dl>
-
-<dl class="method">
-<dt id="GrandPrix.GrandPrixModel.GrandPrixModel.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>Xnew</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/GrandPrix/GrandPrixModel.html#GrandPrixModel.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Predict posterior mean and variance using the BGPLVM. The prediction can also be done on the unfitted model using the Gaussian Process prior. 
-:param</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>Xnew: array-like, shape n_sample x n_latent_dims</dt>
-<dd>n_sample is the number of query points where the prediction will be evaluated.</dd>
-</dl>
-</div></blockquote>
+<code class="descname">get_latent_dims</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel.get_latent_dims" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get predictive distribuiton over latent dimensions of the Gaussian Process Latent Variable Model.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="docutils">
-<dt>data_mean: array-like, shape N x D</dt>
-<dd>Mean values of the predictive distribution at the query points.</dd>
-<dt>data_var: array-like, shape N x D</dt>
-<dd>Variance of the predictive distribution at the query points.</dd>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>latent_mean</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>n_latent_dims</cite></span></dt>
+<dd><p class="first last">Mean values of the predictive distribution over the latent dimensions.</p>
+</dd>
+<dt><strong>latent_var</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>n_latent_dims</cite></span></dt>
+<dd><p class="first last">Variance of the predictive distribution over the latent dimensions.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="GrandPrix.GrandPrixModel.GrandPrixModel.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>Xnew</em><span class="sig-paren">)</span><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict posterior mean and variance using the BGPLVM. The prediction can also be done on the unfitted model using the Gaussian Process prior.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>Xnew</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>n_sample</cite> x <cite>n_latent_dims</cite></span></dt>
+<dd><p class="first last"><cite>n_sample</cite> is the number of query points where the prediction will be evaluated.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data_mean</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>D</cite></span></dt>
+<dd><p class="first last">Mean values of the predictive distribution at the query points.</p>
+</dd>
+<dt><strong>data_var</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>D</cite></span></dt>
+<dd><p class="first last">Variance of the predictive distribution at the query points.</p>
+</dd>
 </dl>
 </td>
 </tr>
@@ -283,7 +364,6 @@ If set to True, print convergence messages.</td>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2018, Manchester Bioinference Group.
-      Last updated on True.
 
     </p>
   </div>
