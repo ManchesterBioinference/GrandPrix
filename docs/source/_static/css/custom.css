@@ -1,0 +1,32 @@
+.wy-nav-content {
+max-width: none;
+}
+
+div.sphinxsidebar {
+    float: left;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 230px;
+    margin-left: -100%;
+    font-size: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+/*    background: #343131;*/
+}
+
+/*
+div.sphinxsidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding-bottom: 2em;
+    width: 230px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    min-height: 100%;
+    background: #343131;
+    z-index: 200;
+    align-content: ;
+}*/
