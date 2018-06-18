@@ -35,29 +35,29 @@ Tutorials and Examples
 
 hkjhkjhjhjhjhk
 
-+--------------------------------+-----------------------------+----------------------------------+
-| Notebook                       | Data description            | Features                         |
-+================================+=============================+==================================+
-| |Windram|                      | * Microarray                | * Model with informative prior   |
-|                                | * 24 time points            | * Model without informative prior|
-|                                |   and 100 genes             |                                  |
-+--------------------------------+-----------------------------+----------------------------------+
-| |McDavid|                      | * Single-cell nCounter      | * Model with informative prior   |
-|                                | * 361 cells and 56 genes    |                                  |
-+--------------------------------+-----------------------------+----------------------------------+
-| |Shalek|                       | * Single-cell RNA-seq       | * Model with informative prior   |
-|                                | * 307 cells and 74 genes    |                                  |
-+--------------------------------+-----------------------------+----------------------------------+
-| |Droplet_DPT|                  | * Single-cell RNA-seq       | * Model with informative prior   |
-|                                | * 2717 cells and 2047 genes |                                  |
-+--------------------------------+-----------------------------+----------------------------------+
-| |Droplet_68K|                  | * Single-cell RNA-seq       | * Model with informative prior   |
-|                                | * 68579 cells and 1000 genes|                                  |
-+--------------------------------+-----------------------------+----------------------------------+
-| |Guo|                          | * Single-cell qPCR          | * Model with informative prior   |
-|                                | * 437 cells and 48 genes    |                                  |
-+--------------------------------+-----------------------------+----------------------------------+
-| |Posterior_variance|           | * Microarray                | * Model with informative prior   |
-|                                | * 24 time points            | * Model without informative prior|
-|                                |   and 100 genes             |                                  |
-+--------------------------------+-----------------------------+----------------------------------+
++---------------------------+-----------------------------+----------------------------------+
+| Notebook                  |    Data description         |      Features                    |
++===========================+=============================+==================================+
+| |Windram|                 | * Microarray                | * Model with informative prior   |
+|                           | * 24 time points            | * Model without informative prior|
+|                           |   and 100 genes             |                                  |
++---------------------------+-----------------------------+----------------------------------+
+| |McDavid|                 | * Single-cell nCounter      | * Model with informative prior   |
+|                           | * 361 cells and 56 genes    |                                  |
++---------------------------+-----------------------------+----------------------------------+
+| |Shalek|                  | * Single-cell RNA-seq       | * Model with informative prior   |
+|                           | * 307 cells and 74 genes    |                                  |
++---------------------------+-----------------------------+----------------------------------+
+| |Droplet_DPT|             | * Single-cell RNA-seq       | * Model with informative prior   |
+|                           | * 2717 cells and 2047 genes |                                  |
++---------------------------+-----------------------------+----------------------------------+
+| |Droplet_68K|             | * Single-cell RNA-seq       | * Model with informative prior   |
+|                           | * 68579 cells and 1000 genes|                                  |
++---------------------------+-----------------------------+----------------------------------+
+| |Guo|                     | * Single-cell qPCR          | * Model with informative prior   |
+|                           | * 437 cells and 48 genes    |                                  |
++---------------------------+-----------------------------+----------------------------------+
+| |Posterior_variance|      | * Microarray                | * Model with informative prior   |
+|                           | * 24 time points            | * Model without informative prior|
+|                           |   and 100 genes             |                                  |
++---------------------------+-----------------------------+----------------------------------+

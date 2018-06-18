@@ -56,13 +56,6 @@
           </a>
 
           
-            
-            
-              <div class="version">
-                0.5.0
-              </div>
-            
-          
 
           
 <div role="search">
@@ -84,6 +77,7 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">GrandPrix</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TutorialsAndExamples.html">Tutorials and Examples</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="APIandArchitecture.html">API and architecture</a><ul class="current">
@@ -163,105 +157,58 @@
 <span id="core-model"></span><h1>Core model<a class="headerlink" href="#module-GrandPrix.GrandPrixModel" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="GrandPrix.GrandPrixModel.GrandPrixModel">
-<em class="property">class </em><code class="descclassname">GrandPrix.GrandPrixModel.</code><code class="descname">GrandPrixModel</code><span class="sig-paren">(</span><em>data</em>, <em>n_latent_dims=1</em>, <em>n_inducing_points=10</em>, <em>kernel={'ls': 1.0</em>, <em>'name': 'RBF'</em>, <em>'var': 1.0}</em>, <em>mData=None</em>, <em>latent_prior_mean=None</em>, <em>latent_prior_var=1.0</em>, <em>latent_mean=None</em>, <em>latent_var=0.1</em>, <em>inducing_inputs=None</em>, <em>dtype='float64'</em><span class="sig-paren">)</span><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">GrandPrix.GrandPrixModel.</code><code class="descname">GrandPrixModel</code><span class="sig-paren">(</span><em>data</em>, <em>n_latent_dims=1</em>, <em>n_inducing_points=10</em>, <em>kernel={'name': 'RBF'</em>, <em>'ls': 1.0</em>, <em>'var': 1.0}</em>, <em>mData=None</em>, <em>latent_prior_mean=None</em>, <em>latent_prior_var=1.0</em>, <em>latent_mean=None</em>, <em>latent_var=0.1</em>, <em>inducing_inputs=None</em>, <em>dtype='float64'</em><span class="sig-paren">)</span><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>D</cite></span></dt>
-<dd><p class="first last">Observed data, where <cite>N</cite> is the number of samples and <cite>D</cite> is the number of features.</p>
-</dd>
-<dt><strong>n_latent_dims</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>int</cite>, optional (default: 1)</span></dt>
-<dd><p class="first last">Number of latent dimentions to compute.</p>
-</dd>
-<dt><strong>n_inducing_points</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>int</cite>, optional (default: 10)</span></dt>
-<dd><p class="first last">Number of inducing or auxiliary points.</p>
-</dd>
-<dt><strong>kernel</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><code class="docutils literal notranslate"><span class="pre">gpflow.kernels</span></code> object, optional (default: RBF kernel with lengthscale and variance set to 1.0)</span></dt>
-<dd><p class="first last">Kernel functions are used to compute the covariance among datapoints. They impose constraints such as smoothness, periodicity on the function being
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data</strong> : <cite>array-like</cite>, shape <cite>N</cite> x <cite>D</cite></p>
+<blockquote>
+<div><p>Observed data, where <cite>N</cite> is the number of samples and <cite>D</cite> is the number of features.</p>
+</div></blockquote>
+<p><strong>n_latent_dims</strong> : <cite>int</cite>, optional (default: 1)</p>
+<blockquote>
+<div><p>Number of latent dimentions to compute.</p>
+</div></blockquote>
+<p><strong>n_inducing_points</strong> : <cite>int</cite>, optional (default: 10)</p>
+<blockquote>
+<div><p>Number of inducing or auxiliary points.</p>
+</div></blockquote>
+<p><strong>kernel</strong> : <code class="docutils literal"><span class="pre">gpflow.kernels</span></code> object, optional (default: RBF kernel with lengthscale and variance set to 1.0)</p>
+<blockquote>
+<div><p>Kernel functions are used to compute the covariance among datapoints. They impose constraints such as smoothness, periodicity on the function being
 learned that is shared by all datapoints.
 Kernels are parameterize by a set of hyperparameters, i.e. lengthscale, variance, etc which can be optimized during model fitting.</p>
-</dd>
-<dt><strong>latent_prior_mean</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>n_latent_dims</cite>, optional (default: 0)</span></dt>
-<dd><p class="first last">write description</p>
-</dd>
-<dt><strong>latent_prior_var</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>n_latent_dims</cite>, optional (default: 1.)</span></dt>
-<dd><p class="first last">write description</p>
-</dd>
-<dt><strong>latent_mean</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N x n_latent_dims</cite>, optional (default: PCA)</span></dt>
-<dd><p class="first last">Initial mean values of the distribution over the latent dimensions.</p>
-</dd>
-<dt><strong>latent_var</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>n_latent_dims</cite>, optional (default: 0.1)</span></dt>
-<dd><p class="first last">Initial variance of the distribution over the latent dimensions.</p>
-</dd>
-<dt><strong>inducing_inputs</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>n_inducing_points</cite> x <cite>n_latent_dims</cite>, optional (default: random subset from laten_mean)</span></dt>
-<dd><p class="first last">this is something</p>
-</dd>
-</dl>
+</div></blockquote>
+<p><strong>latent_prior_mean</strong> : <cite>array-like</cite>, shape <cite>N</cite> x <cite>n_latent_dims</cite>, optional (default: 0)</p>
+<blockquote>
+<div><p>Mean of the prior distribution over the latent dimensions.</p>
+</div></blockquote>
+<p><strong>latent_prior_var</strong> : <cite>array-like</cite>, shape <cite>N</cite> x <cite>n_latent_dims</cite>, optional (default: 1.)</p>
+<blockquote>
+<div><p>Variance of the prior distribution over the latent dimensions.</p>
+</div></blockquote>
+<p><strong>latent_mean</strong> : <cite>array-like</cite>, shape <cite>N x n_latent_dims</cite>, optional (default: PCA)</p>
+<blockquote>
+<div><p>Initial mean values of the distribution over the latent dimensions.</p>
+</div></blockquote>
+<p><strong>latent_var</strong> : <cite>array-like</cite>, shape <cite>N</cite> x <cite>n_latent_dims</cite>, optional (default: 0.1)</p>
+<blockquote>
+<div><p>Initial variance of the distribution over the latent dimensions.</p>
+</div></blockquote>
+<p><strong>inducing_inputs</strong> : <cite>array-like</cite>, shape <cite>n_inducing_points</cite> x <cite>n_latent_dims</cite>, optional (default: random subset from laten_mean)</p>
+<blockquote>
+<div><p>Set of inducing or auxiliary input points.</p>
+</div></blockquote>
+<p><strong>dtype</strong> : <cite>str</cite>, optional (default: ‘float64’)</p>
+<blockquote class="last">
+<div><p>Floating point data type precision to be used.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Methods</p>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#GrandPrix.GrandPrixModel.GrandPrixModel.build" title="GrandPrix.GrandPrixModel.GrandPrixModel.build"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build</span></code></a>()</td>
-<td>Build the model into a Tensorflow graph.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#GrandPrix.GrandPrixModel.GrandPrixModel.fit" title="GrandPrix.GrandPrixModel.GrandPrixModel.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([maxiter,&nbsp;display])</td>
-<td>Fit the BGPLVM model.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#GrandPrix.GrandPrixModel.GrandPrixModel.get_latent_dims" title="GrandPrix.GrandPrixModel.GrandPrixModel.get_latent_dims"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_latent_dims</span></code></a>()</td>
-<td>Get predictive distribuiton over latent dimensions of the Gaussian Process Latent Variable Model.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#GrandPrix.GrandPrixModel.GrandPrixModel.predict" title="GrandPrix.GrandPrixModel.GrandPrixModel.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(Xnew)</td>
-<td>Predict posterior mean and variance using the BGPLVM.</td>
-</tr>
-</tbody>
-</table>
-<table border="1" class="docutils">
-<colgroup>
-<col width="70%" />
-<col width="30%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><strong>get_model</strong></td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><td><strong>set_X_mean</strong></td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><td><strong>set_X_prior_mean</strong></td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><td><strong>set_X_prior_var</strong></td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><td><strong>set_X_var</strong></td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><td><strong>set_Y</strong></td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><td><strong>set_inducing_inputs</strong></td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><td><strong>set_jitter_level</strong></td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><td><strong>set_kern</strong></td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><td><strong>set_trainable</strong></td>
-<td>&#160;</td>
-</tr>
-</tbody>
-</table>
 <dl class="method">
 <dt id="GrandPrix.GrandPrixModel.GrandPrixModel.build">
 <code class="descname">build</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel.build" title="Permalink to this definition">¶</a></dt>
@@ -276,14 +223,14 @@ Kernels are parameterize by a set of hyperparameters, i.e. lengthscale, variance
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>maxiter</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>int</cite>, optional (default: 1000)</span></dt>
-<dd><p class="first last">Maximum number of iterations to perform.</p>
-</dd>
-<dt><strong>display</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><em>bool</em>, optional (default: False)</span></dt>
-<dd><p class="first last">If set to True, print convergence messages.</p>
-</dd>
-</dl>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>maxiter</strong> : <cite>int</cite>, optional (default: 1000)</p>
+<blockquote>
+<div><p>Maximum number of iterations to perform.</p>
+</div></blockquote>
+<p><strong>display</strong> : <em>bool</em>, optional (default: False)</p>
+<blockquote class="last">
+<div><p>If set to True, print convergence messages.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -298,14 +245,14 @@ Kernels are parameterize by a set of hyperparameters, i.e. lengthscale, variance
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>latent_mean</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>n_latent_dims</cite></span></dt>
-<dd><p class="first last">Mean values of the predictive distribution over the latent dimensions.</p>
-</dd>
-<dt><strong>latent_var</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>n_latent_dims</cite></span></dt>
-<dd><p class="first last">Variance of the predictive distribution over the latent dimensions.</p>
-</dd>
-</dl>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>latent_mean</strong> : <cite>array-like</cite>, shape <cite>N</cite> x <cite>n_latent_dims</cite></p>
+<blockquote>
+<div><p>Mean values of the predictive distribution over the latent dimensions.</p>
+</div></blockquote>
+<p><strong>latent_var</strong> : <cite>array-like</cite>, shape <cite>N</cite> x <cite>n_latent_dims</cite></p>
+<blockquote class="last">
+<div><p>Variance of the predictive distribution over the latent dimensions.</p>
+</div></blockquote>
 </td>
 </tr>
 </tbody>
@@ -320,21 +267,37 @@ Kernels are parameterize by a set of hyperparameters, i.e. lengthscale, variance
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt><strong>Xnew</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>n_sample</cite> x <cite>n_latent_dims</cite></span></dt>
-<dd><p class="first last"><cite>n_sample</cite> is the number of query points where the prediction will be evaluated.</p>
-</dd>
-</dl>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>Xnew</strong> : <cite>array-like</cite>, shape <cite>n_sample</cite> x <cite>n_latent_dims</cite></p>
+<blockquote>
+<div><p><cite>n_sample</cite> is the number of query points where the prediction will be evaluated.</p>
+</div></blockquote>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>data_mean</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>D</cite></span></dt>
-<dd><p class="first last">Mean values of the predictive distribution at the query points.</p>
-</dd>
-<dt><strong>data_var</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array-like</cite>, shape <cite>N</cite> x <cite>D</cite></span></dt>
-<dd><p class="first last">Variance of the predictive distribution at the query points.</p>
-</dd>
-</dl>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>data_mean</strong> : <cite>array-like</cite>, shape <cite>N</cite> x <cite>D</cite></p>
+<blockquote>
+<div><p>Mean values of the predictive distribution at the query points.</p>
+</div></blockquote>
+<p><strong>data_var</strong> : <cite>array-like</cite>, shape <cite>N</cite> x <cite>D</cite></p>
+<blockquote class="last">
+<div><p>Variance of the predictive distribution at the query points.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="GrandPrix.GrandPrixModel.GrandPrixModel.set_trainable">
+<code class="descname">set_trainable</code><span class="sig-paren">(</span><em>paramlist=None</em><span class="sig-paren">)</span><a class="headerlink" href="#GrandPrix.GrandPrixModel.GrandPrixModel.set_trainable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fix model (auxiliary) parameters and hyperparameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>paramlist</strong> : <cite>list</cite>, optional (default: None)</p>
+<p><strong>:param paramlist:</strong></p>
+<p class="last"><strong>:return:</strong></p>
 </td>
 </tr>
 </tbody>

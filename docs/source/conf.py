@@ -37,6 +37,8 @@ sys.path.insert(0, os.path.abspath('../../'))
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.coverage',
+    # 'sphinxcontrib.fulltoc',
+    # 'sphinxjp.themes.basicstrap',
     'numpydoc']
 
 #sphinx.ext.viewcode
@@ -95,11 +97,13 @@ todo_include_todos = False
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
+# html_theme = 'classic'
+# html_theme = 'basicstrap'
 
 # SA added this
-html_theme_options = dict(
-    navigation_depth=2,
-)
+# html_theme_options = dict(
+#     navigation_depth=2,
+# )
 html_context = dict(
     display_github=True,      # Integrate GitHub
     github_user='ManchesterBioinference',   # Username
@@ -127,17 +131,112 @@ def setup(app):
 #
 # This is required for the alabaster theme
 # refs: http://alabaster.readthedocs.io/en/latest/installation.html#sidebars
-html_sidebars = {
-    '**': [
-        'about.html',
-        'navigation.html',
-        'relations.html',  # needs 'show_related': True theme option to display
-        'searchbox.html',
-        'donate.html',
-    ]
+# html_sidebars = {
+#     '**': [
+#         'about.html',
+#         'navigation.html',
+#         'relations.html',  # needs 'show_related': True theme option to display
+#         'searchbox.html',
+#         'donate.html',
+#     ]
+# }
+
+# SA - This is for the read_the_docs theme
+html_theme_options = {
+    'canonical_url': '',
+    'analytics_id': '',
+    'logo_only': True,
+    'display_version': False,
+    'prev_next_buttons_location': 'bottom',
+    'style_external_links': False,
+    'vcs_pageview_mode': '',
+    # Toc options
+    'collapse_navigation': True,
+    'sticky_navigation': True,
+    'navigation_depth': 4,
+    'includehidden': True,
+    'titles_only': False
 }
+#SA - This is for the classic theme
+# html_theme_options = {
+#     "rightsidebar": "False",
+#     # "relbarbgcolor": "black",
+#     # "collapseindex":"True",
+#     "externalrefs":"True",
+# }
 
+# -------------------------------------------------------------------------
 
+# html_theme_options = {
+#
+#     # Set the lang attribute of the html tag. Defaults to 'en'
+#     'lang': 'en',
+#     # Disable showing the sidebar. Defaults to 'false'
+#     'nosidebar': False,
+#     # Show header searchbox. Defaults to false. works only "nosidber=True",
+#     'header_searchbox': False,
+#
+#     # Put the sidebar on the right side. Defaults to false.
+#     'rightsidebar': False,
+#     # Set the width of the sidebar. Defaults to 3
+#     'sidebar_span': 3,
+#
+#     # Fix navbar to top of screen. Defaults to true
+#     'nav_fixed_top': True,
+#     # Fix the width of the sidebar. Defaults to false
+#     'nav_fixed': False,
+#     # Set the width of the sidebar. Defaults to '900px'
+#     'nav_width': '900px',
+#     # Fix the width of the content area. Defaults to false
+#
+#     'content_fixed': False,
+#     # Set the width of the content area. Defaults to '900px'
+#     'content_width': '900px',
+#     # Fix the width of the row. Defaults to false
+#     'row_fixed': False,
+#
+#     # Disable the responsive design. Defaults to false
+#     'noresponsive': False,
+#     # Disable the responsive footer relbar. Defaults to false
+#     'noresponsiverelbar': False,
+#     # Disable flat design. Defaults to false.
+#     # Works only "bootstrap_version = 3"
+#     'noflatdesign': False,
+#
+#     # Enable Google Web Font. Defaults to false
+#     'googlewebfont': False,
+#     # Set the URL of Google Web Font's CSS.
+#     # Defaults to 'http://fonts.googleapis.com/css?family=Text+Me+One'
+#     'googlewebfont_url': 'http://fonts.googleapis.com/css?family=Lily+Script+One',  # NOQA
+#     # Set the Style of Google Web Font's CSS.
+#     # Defaults to "font-family: 'Text Me One', sans-serif;"
+#     'googlewebfont_style': u"font-family: 'Lily Script One' cursive;",
+#
+#     # Set 'navbar-inverse' attribute to header navbar. Defaults to false.
+#     'header_inverse': False,
+#     # Set 'navbar-inverse' attribute to relbar navbar. Defaults to false.
+#     'relbar_inverse': False,
+#
+#     # Enable inner theme by Bootswatch. Defaults to false
+#     'inner_theme': False,
+#     # Set the name of innner theme. Defaults to 'bootswatch-simplex'
+#     'inner_theme_name': 'bootswatch-simplex',
+#
+#     # Select Twitter bootstrap version 2 or 3. Defaults to '3'
+#     'bootstrap_version': '3',
+#
+#     # Show "theme preview" button in header navbar. Defaults to false.
+#     'theme_preview': True,
+#
+#     # Set the Size of Heading text. Defaults to None
+#     # 'h1_size': '3.0em',
+#     # 'h2_size': '2.6em',
+#     # 'h3_size': '2.2em',
+#     # 'h4_size': '1.8em',
+#     # 'h5_size': '1.4em',
+#     # 'h6_size': '1.1em',
+# }
+# -------------------------------------------------------------------------
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.

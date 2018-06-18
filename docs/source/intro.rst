@@ -14,6 +14,8 @@ GrandPrix is a package for non-linear probabilistic dimension reduction in pytho
    :maxdepth: 1
    :hidden:
 
+   self
+
    Installation
    TutorialsAndExamples
    APIandArchitecture

@@ -37,10 +37,10 @@ class GrandPrixModel(object):
         Kernels are parameterize by a set of hyperparameters, i.e. lengthscale, variance, etc which can be optimized during model fitting.
 
     latent_prior_mean : `array-like`, shape `N` x `n_latent_dims`, optional (default: 0)
-        write description
+        Mean of the prior distribution over the latent dimensions.
 
     latent_prior_var : `array-like`, shape `N` x `n_latent_dims`, optional (default: 1.)
-        write description
+        Variance of the prior distribution over the latent dimensions.
 
     latent_mean : `array-like`, shape `N x n_latent_dims`, optional (default: PCA)
         Initial mean values of the distribution over the latent dimensions.
@@ -49,7 +49,10 @@ class GrandPrixModel(object):
         Initial variance of the distribution over the latent dimensions.
 
     inducing_inputs : `array-like`, shape `n_inducing_points` x `n_latent_dims`, optional (default: random subset from laten_mean)
-        this is something
+        Set of inducing or auxiliary input points.
+
+    dtype : `str`, optional (default: 'float64')
+        Floating point data type precision to be used.
    
     """
     def __init__(self, data, n_latent_dims=1, n_inducing_points=10, kernel={'name':'RBF', 'ls':1.0, 'var':1.0}, mData=None,
@@ -164,6 +167,16 @@ class GrandPrixModel(object):
         return self.m.as_pandas_table()
 
     def set_trainable(self, paramlist=None):
+        """
+        Fix model (auxiliary) parameters and hyperparameters.
+
+        Parameters
+        ----------
+        paramlist : `list`, optional (default: None)
+
+        :param paramlist:
+        :return:
+        """
         if paramlist is not None:
             if 'kernel_lengthscales' in paramlist:  self.m.kern.lengthscales.trainable = False
             if 'kernel_variance' in paramlist:  self.m.kern.variance.trainable = False
