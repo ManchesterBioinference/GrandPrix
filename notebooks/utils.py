@@ -4,6 +4,7 @@ import matplotlib.lines as mlines
 import  numpy as np
 import  pandas as pd
 from collections import OrderedDict
+from cycler import cycler
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -11,7 +12,9 @@ matplotlib.style.use('ggplot')
 matplotlib.rcParams['axes.facecolor'] = 'white'
 matplotlib.rcParams['axes.edgecolor'] = 'black'
 # plt.rc('axes', color_cycle=['royalblue', 'orange', 'green', 'red', 'blueviolet', 'sienna', 'hotpink', 'gray', 'y', 'c'])
-plt.rc('axes', color_cycle=['royalblue', 'green', 'sienna', 'c', 'orange', 'red', 'blueviolet', 'hotpink', 'gray', 'y'])
+# plt.rc('axes', color_cycle=['royalblue', 'green', 'sienna', 'c', 'orange', 'red', 'blueviolet', 'hotpink', 'gray', 'y'])
+plt.rc('axes', prop_cycle=cycler(color=['royalblue', 'green', 'sienna', 'c', 'orange', 'red', 'blueviolet', 'hotpink', 'gray', 'y']))
+# axes.prop_cycle : cycler('color', ['b', 'g', 'r', 'c', 'm', 'y', 'k'])
 
 def getari_for_latent_space(X, truelabels):
     from sklearn.cluster import KMeans
