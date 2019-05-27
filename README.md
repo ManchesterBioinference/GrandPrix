@@ -3,7 +3,7 @@
 GrandPrix is a package for non-linear probabilistic dimension reduction algorithm in python, using [TensorFlow](github.com/tensorflow) and [GPFlow](https://github.com/GPflow/GPflow). GrandPrix uses sparse variational approximation to project data to lower dimensional spaces. The model is described in the paper
 
 ["GrandPrix: Scaling up the Bayesian GPLVM for single-cell data.", 
-Sumon Ahmed, Magnus Rattray and Alexis Boukouvalas, bioRxiv, 2017.](https://www.biorxiv.org/content/early/2018/05/01/227843)
+Sumon Ahmed, Magnus Rattray and Alexis Boukouvalas, Bioinformatics, Volume 35, Issue 1, 01 January 2019, Pages 47–54.](https://doi.org/10.1093/bioinformatics/bty533)
 
 To replicate the results in the paper please use the [`betaVersion`](https://github.com/ManchesterBioinference/GrandPrix/tree/betaVersion) branch. The [`master`](https://github.com/ManchesterBioinference/GrandPrix/tree/master) branch works with the latest version of `GPflow`.
 
